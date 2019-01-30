@@ -23,6 +23,7 @@ class ThumbyActivity: AppCompatActivity() {
     }
 
     private var mHeightView: Int = 0
+    var mBitmapList: LongSparseArray<Thumbnail>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +41,12 @@ class ThumbyActivity: AppCompatActivity() {
         view_thumbnail.setVideoURI(uri)
         view_thumbnail.seekTo(0)
 
-        view_thumbnail.setOnPreparedListener { thumbnail_seekbar.max = view_thumbnail.duration }
+        view_thumbnail.setOnPreparedListener { thumbnail_seekbar.max = 100 }
 
         thumbnail_seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 view_thumbnail.seekTo(progress)
-                thumbnail_seekbar.setCurrentFrame(getBitmapForProgress(view_thumbnail.currentPosition.toLong() * 1000))
+                thumbnail_seekbar.setCurrentFrame(mBitmapList!![progress.toLong()]!!.bitmap)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -71,22 +72,24 @@ class ThumbyActivity: AppCompatActivity() {
         val thumbWidth = mHeightView
         val thumbHeight = mHeightView
 
-        val numThumbs = Math.ceil((width.toFloat() / thumbWidth).toDouble()).toInt()
+        val numThumbs = 101
 
         val interval = videoLengthInMs / numThumbs
 
         for (i in 0 until numThumbs) {
             val frameTime = i * interval
-            var bitmap = mediaMetadataRetriever.getFrameAtTime(frameTime, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
+            var bitmap = mediaMetadataRetriever.getFrameAtTime(frameTime.toLong(),
+                MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
             try {
                 bitmap = Bitmap.createScaledBitmap(bitmap, thumbWidth, thumbHeight, false)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
-            thumbnailList.put(i.toLong(), Thumbnail(frameTime, bitmap))
+            thumbnailList.put(i.toLong(), Thumbnail(frameTime.toLong(), bitmap))
         }
         mediaMetadataRetriever.release()
+        mBitmapList = thumbnailList
         thumbnail.mBitmapList = thumbnailList
         thumbnail_seekbar.setCurrentFrame(thumbnailList[0]!!.bitmap)
         return thumbnailList

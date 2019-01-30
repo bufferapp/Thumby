@@ -26,8 +26,8 @@
         <org.buffer.android.thumby.ThumbnailSeekBar
                 android:id="@+id/thumbnail_seekbar"
                 android:layout_width="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="-16dp"
                 android:layout_marginBottom="64dp"
                 android:layout_height="wrap_content"
                 app:splitTrack="false"/>

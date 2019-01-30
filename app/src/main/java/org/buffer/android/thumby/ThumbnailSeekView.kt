@@ -2,25 +2,27 @@ package org.buffer.android.thumby
 
 import android.content.Context
 import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.AppCompatSeekBar
 import android.util.AttributeSet
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.ImageView
 
-class ThumbnailSeekBar @JvmOverloads constructor(
+class ThumbnailSeekView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
-) : AppCompatSeekBar(context, attrs) {
+) : ImageView(context, attrs) {
 
+    var min = 0
+    var max = 0
 
     init {
-        progressDrawable = ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent))
-        background = ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent))
+        layoutParams = ViewGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+        isFocusable = true
+        isFocusableInTouchMode = true
     }
 
     fun setCurrentFrame(bitmap: Bitmap) {
-        thumb = BitmapDrawable(resources, addWhiteBorderToBitmap(bitmap, 8))
+        setImageBitmap(addWhiteBorderToBitmap(bitmap, 8))
     }
 
     private fun addWhiteBorderToBitmap(bmp: Bitmap, borderSize: Int): Bitmap {
@@ -44,4 +46,6 @@ class ThumbnailSeekBar @JvmOverloads constructor(
         canvas.drawRect(borderRect,paint)
         return bmpWithBorder
     }
+
+
 }
