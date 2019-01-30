@@ -8,9 +8,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.util.LongSparseArray
 import android.support.v7.app.AppCompatActivity
-import android.view.ViewTreeObserver
+import android.view.MenuItem
 import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_thumby.*
+
 
 class ThumbyActivity: AppCompatActivity() {
 
@@ -28,16 +29,13 @@ class ThumbyActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_thumby)
+        title = getString(R.string.picker_title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         mHeightView = resources.getDimensionPixelOffset(R.dimen.frames_video_height)
 
         val uri = intent.getParcelableExtra("URI") as Uri
-        thumbnail.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                getBitmap(thumbnail.width, uri)
-                thumbnail.viewTreeObserver.removeOnGlobalLayoutListener(this)
-            }
-        })
-     //   thumbnail.seekListener = seekListener
+        getBitmap(uri)
+
         view_thumbnail.setVideoURI(uri)
         view_thumbnail.seekTo(0)
 
@@ -45,7 +43,7 @@ class ThumbyActivity: AppCompatActivity() {
 
         thumbnail_seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                view_thumbnail.seekTo(progress)
+                view_thumbnail.seekTo((progress * view_thumbnail.duration) / 100)
                 thumbnail_seekbar.setCurrentFrame(mBitmapList!![progress.toLong()]!!.bitmap)
             }
 
@@ -60,7 +58,24 @@ class ThumbyActivity: AppCompatActivity() {
         thumbnail_seekbar.bringToFront()
     }
 
-    private fun getBitmap(width: Int, uri: Uri): LongSparseArray<Thumbnail> {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finishWithData()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun finishWithData() {
+        val intent = Intent()
+        intent.putExtra("editTextValue", view_thumbnail.currentPosition)
+        setResult(RESULT_OK, intent)
+        finish()
+    }
+
+    private fun getBitmap(uri: Uri): LongSparseArray<Thumbnail> {
         val thumbnailList = LongSparseArray<Thumbnail>()
         val mediaMetadataRetriever = MediaMetadataRetriever()
         mediaMetadataRetriever.setDataSource(this, uri)
@@ -90,20 +105,25 @@ class ThumbyActivity: AppCompatActivity() {
         }
         mediaMetadataRetriever.release()
         mBitmapList = thumbnailList
-        thumbnail.mBitmapList = thumbnailList
+
+        val thumbList = LongSparseArray<Thumbnail>()
+        val thumbCount = 7
+        val positionGap = numThumbs / thumbCount
+
+        for (i in 0 until thumbCount) {
+            val position = if (i == 0) {
+                0
+            } else {
+                i * positionGap
+            }
+            thumbList.put(i.toLong(), Thumbnail(i.toLong(), mBitmapList!![position.toLong()]!!.bitmap))
+        }
+
+
+        thumbnail.mBitmapList = thumbList
         thumbnail_seekbar.setCurrentFrame(thumbnailList[0]!!.bitmap)
         return thumbnailList
     }
 
-    private fun getBitmapForProgress(frameTime: Long): Bitmap {
-        val mediaMetadataRetriever = MediaMetadataRetriever()
-        mediaMetadataRetriever.setDataSource(this, intent.getParcelableExtra("URI") as Uri)
-        var bitmap = mediaMetadataRetriever.getFrameAtTime(frameTime, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
-        try {
-            bitmap = Bitmap.createScaledBitmap(bitmap, mHeightView, mHeightView, false)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return bitmap
-    }
+
 }
