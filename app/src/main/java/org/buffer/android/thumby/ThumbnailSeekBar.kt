@@ -13,14 +13,19 @@ class ThumbnailSeekBar @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : AppCompatSeekBar(context, attrs) {
 
+    var thumbnail: Thumbnail? = null
+    set(value) {
+        field = value
+        field?.let { setCurrentFrame(it.bitmap) }
+    }
 
     init {
         progressDrawable = ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent))
         background = ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent))
     }
 
-    fun setCurrentFrame(bitmap: Bitmap) {
-        thumb = BitmapDrawable(resources, addWhiteBorderToBitmap(bitmap, 8))
+    private fun setCurrentFrame(bitmap: Bitmap) {
+        thumb = BitmapDrawable(resources, addWhiteBorderToBitmap(bitmap, 4))
     }
 
     private fun addWhiteBorderToBitmap(bmp: Bitmap, borderSize: Int): Bitmap {

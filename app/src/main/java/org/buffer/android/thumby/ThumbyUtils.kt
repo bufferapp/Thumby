@@ -18,5 +18,4 @@ object ThumbyUtils {
         }
         return bitmap
     }
-
 }

@@ -1,37 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent" android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <org.buffer.android.thumby.SquareVideoView
+    <org.buffer.android.thumby.CenterCropVideoView
             android:id="@+id/view_thumbnail"
             android:layout_width="match_parent"
+            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"/>
 
-    <FrameLayout android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_alignParentBottom="true"
-                 android:layout_centerHorizontal="true"
-                 app:elevation="4dp">
+    <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
 
-        <org.buffer.android.thumby.ThumbnailTimeline
-                android:id="@+id/thumbnail"
-                android:layout_width="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="64dp"
-                android:layout_height="wrap_content"/>
+    <LinearLayout
+            android:id="@+id/thumbnails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:elevation="2dp"
+            android:layout_marginBottom="64dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"/>
 
-        <org.buffer.android.thumby.ThumbnailSeekBar
-                android:id="@+id/thumbnail_seekbar"
-                android:layout_width="match_parent"
-                android:paddingStart="38dp"
-                android:paddingEnd="42dp"
-                android:layout_marginBottom="64dp"
-                android:layout_height="wrap_content"
-                app:splitTrack="false"/>
-
-    </FrameLayout>
+    <org.buffer.android.thumby.ThumbnailSeekBar
+            android:id="@+id/thumbnail_seekbar"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:elevation="2dp"
+            android:layout_marginStart="16dp"
+            android:paddingStart="34dp"
+            android:paddingEnd="34dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="64dp"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
 </RelativeLayout>

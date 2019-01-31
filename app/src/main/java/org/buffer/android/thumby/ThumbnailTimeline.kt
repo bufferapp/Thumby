@@ -30,8 +30,6 @@ class ThumbnailTimeline @JvmOverloads constructor(
         val h = View.resolveSizeAndState(minH, heightMeasureSpec, 1)
 
         setMeasuredDimension(w, h)
-        isFocusable = true
-        isFocusableInTouchMode = true
     }
 
     override fun onDraw(canvas: Canvas) {
