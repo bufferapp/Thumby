@@ -98,7 +98,7 @@ class ThumbyActivity : AppCompatActivity() {
         val timelineThumbnailCount = 7
         val positionGap = THUMBNAIL_COUNT / timelineThumbnailCount
 
-        for (i in 0 until timelineThumbnailCount) {
+        for (i in 0 until timelineThumbnailCount - 1) {
             val position = if (i == 0) {
                 0
             } else {
@@ -106,6 +106,7 @@ class ThumbyActivity : AppCompatActivity() {
             }
             thumbnails.addView(ThumbnailView(this@ThumbyActivity, thumbnail = bitmaps[position.toLong()]))
         }
+        thumbnails.addView(ThumbnailView(this@ThumbyActivity, thumbnail = bitmaps[(bitmaps.size() - 1).toLong()]))
         thumbnail_seekbar.thumbnail = bitmaps[0]
     }
 
