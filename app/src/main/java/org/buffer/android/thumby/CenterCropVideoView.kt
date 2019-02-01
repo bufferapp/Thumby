@@ -18,6 +18,7 @@ class CenterCropVideoView @JvmOverloads constructor(
 
     private var videoHeight = 0f
     private var videoWidth = 0f
+    private var videoSizeDivisor = 1
 
     init {
         surfaceTextureListener = this
@@ -45,7 +46,8 @@ class CenterCropVideoView @JvmOverloads constructor(
         mediaPlayer?.setSurface(Surface(surfaceTexture))
     }
 
-    fun setDataSource(context: Context, uri: Uri) {
+    fun setDataSource(context: Context, uri: Uri, videoSizeDivisor: Int = 1) {
+        this.videoSizeDivisor = videoSizeDivisor
         initPlayer()
         mediaPlayer?.setDataSource(context, uri)
         prepare()
@@ -60,9 +62,9 @@ class CenterCropVideoView @JvmOverloads constructor(
     }
 
     private fun prepare() {
-        mediaPlayer?.setOnVideoSizeChangedListener { mp, width, height ->
-            videoWidth = width.toFloat()
-            videoHeight = height.toFloat()
+        mediaPlayer?.setOnVideoSizeChangedListener { _, width, height ->
+            videoWidth = width.toFloat() / videoSizeDivisor
+            videoHeight = height.toFloat()  / videoSizeDivisor
             updateTextureViewSize()
             seekTo(0)
         }

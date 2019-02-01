@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.buffer.android.thumby.ThumbyActivity
 import org.buffer.android.thumby.ThumbyActivity.Companion.EXTRA_THUMBNAIL
 import org.buffer.android.thumby.ThumbyActivity.Companion.EXTRA_URI
-import org.buffer.android.thumby.ThumbyUtils
+import org.buffer.android.thumby.util.ThumbyUtils
 
 class MainActivity : AppCompatActivity() {
 

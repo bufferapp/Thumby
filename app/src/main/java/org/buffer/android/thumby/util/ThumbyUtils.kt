@@ -1,4 +1,4 @@
-package org.buffer.android.thumby
+package org.buffer.android.thumby.util
 
 import android.content.Context
 import android.graphics.Bitmap

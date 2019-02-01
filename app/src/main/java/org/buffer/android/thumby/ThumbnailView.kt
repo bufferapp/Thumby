@@ -2,26 +2,18 @@ package org.buffer.android.thumby
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 
 class ThumbnailView @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null,
-    thumbnail: Thumbnail? = null
+    attrs: AttributeSet? = null
 ) : ImageView(context, attrs) {
 
     init {
-        thumbnail?.let { setThumbnail(thumbnail) }
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec)
-    }
-
-    private fun setThumbnail(thumbnail: Thumbnail) {
-        layoutParams = ViewGroup.LayoutParams(thumbnail.bitmap.width, thumbnail.bitmap.height)
-        setImageBitmap(thumbnail.bitmap)
+        scaleType = ScaleType.CENTER_CROP
         alpha = 0.4f
+        val dimension = resources.getDimensionPixelSize(R.dimen.frames_video_height)
+        layoutParams = LinearLayout.LayoutParams(dimension, dimension).apply { weight = 1f }
     }
 }

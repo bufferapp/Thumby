@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="frames_video_height">46dp</dimen>
+    <dimen name="frames_video_height">54dp</dimen>
 </resources>
