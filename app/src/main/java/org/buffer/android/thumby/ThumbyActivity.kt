@@ -15,7 +15,7 @@ import org.buffer.android.thumby.listener.SeekListener
 class ThumbyActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_THUMBNAIL = "org.buffer.android.thumby.EXTRA_THUMBNAIL"
+        const val EXTRA_THUMBNAIL_POSITION = "org.buffer.android.thumby.EXTRA_THUMBNAIL_POSITION"
         const val EXTRA_URI = "org.buffer.android.thumby.EXTRA_URI"
 
         fun getStartIntent(context: Context, uri: Uri): Intent {
@@ -70,7 +70,7 @@ class ThumbyActivity : AppCompatActivity() {
 
     private fun finishWithData() {
         val intent = Intent()
-        intent.putExtra(EXTRA_THUMBNAIL,
+        intent.putExtra(EXTRA_THUMBNAIL_POSITION,
             ((view_thumbnail.getDuration() / 100) * thumbs.currentProgress).toLong() * 1000)
         intent.putExtra(EXTRA_URI, videoUri)
         setResult(RESULT_OK, intent)

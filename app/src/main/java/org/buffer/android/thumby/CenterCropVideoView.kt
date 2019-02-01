@@ -63,8 +63,8 @@ class CenterCropVideoView @JvmOverloads constructor(
 
     private fun prepare() {
         mediaPlayer?.setOnVideoSizeChangedListener { _, width, height ->
-            videoWidth = width.toFloat() / videoSizeDivisor
-            videoHeight = height.toFloat()  / videoSizeDivisor
+            videoWidth = width.toFloat()
+            videoHeight = height.toFloat()
             updateTextureViewSize()
             seekTo(0)
         }
@@ -75,16 +75,18 @@ class CenterCropVideoView @JvmOverloads constructor(
         var scaleX = 1.0f
         var scaleY = 1.0f
 
-        if (videoWidth > width && videoHeight > height) {
-            scaleX = videoWidth / width
-            scaleY = videoHeight / height
-        } else if (videoWidth < width && videoHeight < height) {
-            scaleY = width / videoWidth
-            scaleX = height / videoHeight
-        } else if (width > videoWidth) {
-            scaleY = width / videoWidth / (height / videoHeight)
-        } else if (height > videoHeight) {
-            scaleX = height / videoHeight / (width / videoWidth)
+        if (videoWidth != videoHeight) {
+            if (videoWidth > width && videoHeight > height) {
+                scaleX = videoWidth / width
+                scaleY = videoHeight / height
+            } else if (videoWidth < width && videoHeight < height) {
+                scaleY = width / videoWidth
+                scaleX = height / videoHeight
+            } else if (width > videoWidth) {
+                scaleY = width / videoWidth / (height / videoHeight)
+            } else if (height > videoHeight) {
+                scaleX = height / videoHeight / (width / videoWidth)
+            }
         }
 
         val matrix = Matrix().apply {

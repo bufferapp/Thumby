@@ -43,7 +43,7 @@ class ThumbnailTimeline @JvmOverloads constructor(
         isFocusable = true
         isFocusableInTouchMode = true
         setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) elevation = 4f
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) elevation = 8f
 
         val margin = DisplayMetricsUtil.convertDpToPixel(16f, context).toInt()
         val params = FrameLayout.LayoutParams(
