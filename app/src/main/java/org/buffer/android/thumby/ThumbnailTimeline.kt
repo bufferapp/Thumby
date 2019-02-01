@@ -1,7 +1,5 @@
 package org.buffer.android.thumby
 
-import android.R.attr.maxHeight
-import android.R.attr.maxWidth
 import android.content.Context
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
@@ -95,17 +93,18 @@ class ThumbnailTimeline @JvmOverloads constructor(
             val frameTime = i * interval
             var bitmap = metaDataSource.getFrameAtTime(frameTime, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
             try {
-                val ratioBitmap = width.toFloat() / height.toFloat()
-                val ratioMax = maxWidth.toFloat() / maxHeight.toFloat()
-
-                var scaledWidth = maxWidth
-                var scaledHeight = maxHeight
-                if (ratioMax > ratioBitmap) {
-                    scaledWidth = (maxHeight.toFloat() * ratioBitmap).toInt()
+                val targetWidth: Int
+                val targetHeight: Int
+                if (bitmap.height > bitmap.width) {
+                    targetHeight = frameDimension
+                    val percentage = frameDimension.toFloat() / bitmap.height
+                    targetWidth = (bitmap.width * percentage).toInt()
                 } else {
-                    scaledHeight = (maxWidth.toFloat() / ratioBitmap).toInt()
+                    targetWidth = frameDimension
+                    val percentage = frameDimension.toFloat() / bitmap.width
+                    targetHeight = (bitmap.height * percentage).toInt()
                 }
-                bitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
+                bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

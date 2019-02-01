@@ -63,8 +63,8 @@ class CenterCropVideoView @JvmOverloads constructor(
 
     private fun prepare() {
         mediaPlayer?.setOnVideoSizeChangedListener { _, width, height ->
-            videoWidth = width.toFloat()
-            videoHeight = height.toFloat()
+            videoWidth = width.toFloat() / videoSizeDivisor
+            videoHeight = height.toFloat()  / videoSizeDivisor
             updateTextureViewSize()
             seekTo(0)
         }
