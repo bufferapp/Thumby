@@ -32,6 +32,7 @@ class ThumbnailTimeline @JvmOverloads constructor(
                 loadThumbnails(it)
                 invalidate()
                 view_seek_bar.setDataSource(context, it, 4)
+                view_seek_bar.seekTo(currentSeekPosition.toInt())
             }
         }
 
