@@ -21,7 +21,7 @@ class ThumbyActivity : AppCompatActivity() {
         fun getStartIntent(context: Context, uri: Uri, thumbnailPosition: Long = 0): Intent {
             val intent = Intent(context, ThumbyActivity::class.java)
             intent.putExtra(EXTRA_URI, uri)
-            intent.putExtra(EXTRA_THUMBNAIL_POSITION, uri)
+            intent.putExtra(EXTRA_THUMBNAIL_POSITION, thumbnailPosition)
             return intent
         }
     }
