@@ -81,6 +81,7 @@ class ThumbyActivity : AppCompatActivity() {
 
     private val seekListener = object  : SeekListener {
         override fun onVideoSeeked(percentage: Double) {
+            val duration = view_thumbnail.getDuration()
             view_thumbnail.seekTo((percentage.toInt() * view_thumbnail.getDuration()) / 100)
         }
     }
