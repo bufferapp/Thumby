@@ -5,15 +5,14 @@ import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.view_timeline.view.*
 import org.buffer.android.thumby.listener.SeekListener
-
 
 class ThumbnailTimeline @JvmOverloads constructor(
     context: Context,

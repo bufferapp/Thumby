@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.ViewTreeObserver
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_thumby.*
 import org.buffer.android.thumby.listener.SeekListener
 
