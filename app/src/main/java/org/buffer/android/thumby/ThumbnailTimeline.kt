@@ -9,7 +9,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.RelativeLayout
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.view_timeline.view.*
 import org.buffer.android.thumby.listener.SeekListener
@@ -63,8 +63,9 @@ class ThumbnailTimeline @JvmOverloads constructor(
         val seekViewWidth = context.resources.getDimensionPixelSize(R.dimen.frames_video_height)
         currentSeekPosition = (Math.round(event.x) - (seekViewWidth / 2)).toFloat()
 
-        val availableWidth = container_thumbnails.width - (layoutParams as RelativeLayout.LayoutParams).marginEnd -
-                (layoutParams as RelativeLayout.LayoutParams).marginStart
+        val availableWidth = container_thumbnails.width -
+                (layoutParams as LinearLayout.LayoutParams).marginEnd -
+                (layoutParams as LinearLayout.LayoutParams).marginStart
         if (currentSeekPosition + seekViewWidth > container_thumbnails.right) {
             currentSeekPosition = (container_thumbnails.right - seekViewWidth).toFloat()
         } else if (currentSeekPosition < container_thumbnails.left) {
