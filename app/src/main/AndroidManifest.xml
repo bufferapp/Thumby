@@ -8,7 +8,7 @@
                  android:supportsRtl="true"
                  android:theme="@style/AppTheme">
 
-        <activity android:name=".ThumbyActivity"/>
+        <activity android:name=".ThumbyActivity" />
 
     </application>
 </manifest>

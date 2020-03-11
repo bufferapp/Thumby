@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     <org.buffer.android.thumby.CenterCropVideoView
             android:id="@+id/view_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="64dp"/>
+            android:layout_marginBottom="64dp" />
 
     <org.buffer.android.thumby.ThumbnailTimeline
             android:id="@+id/thumbs"
-            android:layout_below="@+id/view_thumbnail"
             android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_height="@dimen/frames_video_height"/>
+            android:layout_height="@dimen/frames_video_height"
+            android:layout_gravity="center_horizontal" />
 
-</RelativeLayout>
+</LinearLayout>

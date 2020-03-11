@@ -32,6 +32,8 @@ class ThumbyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_thumby)
         title = getString(R.string.picker_title)
+
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         videoUri = intent.getParcelableExtra(EXTRA_URI) as Uri
 
