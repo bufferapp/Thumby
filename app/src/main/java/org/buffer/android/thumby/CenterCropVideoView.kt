@@ -32,11 +32,12 @@ class CenterCropVideoView @JvmOverloads constructor(
         surface: SurfaceTexture?,
         width: Int,
         height: Int
-    ) { }
+    ) {
+    }
 
-    override fun onSurfaceTextureUpdated(surface: SurfaceTexture?) { }
+    override fun onSurfaceTextureUpdated(surface: SurfaceTexture?) {}
 
-    override fun onSurfaceTextureDestroyed(surface: SurfaceTexture?): Boolean  = false
+    override fun onSurfaceTextureDestroyed(surface: SurfaceTexture?): Boolean = false
 
     override fun onSurfaceTextureAvailable(
         surface: SurfaceTexture?,
@@ -62,13 +63,23 @@ class CenterCropVideoView @JvmOverloads constructor(
     }
 
     private fun prepare() {
-        mediaPlayer?.setOnVideoSizeChangedListener { _, width, height ->
-            videoWidth = width.toFloat() / videoSizeDivisor
-            videoHeight = height.toFloat()  / videoSizeDivisor
-            updateTextureViewSize()
-            seekTo(0)
-        }
+        /*    mediaPlayer?.setOnVideoSizeChangedListener { _, width, height ->
+                videoWidth = width.toFloat() / videoSizeDivisor
+                videoHeight = height.toFloat() / videoSizeDivisor
+                updateTextureViewSize()
+                seekTo(0)
+            }
+            mediaPlayer?.prepareAsync()
+            mediaPlayer?.setVideoScalingMode(
+                MediaPlayer
+                    .VIDEO_SCALING_MODE_SCALE_TO_FIT
+            )*/
+        mediaPlayer?.setVideoScalingMode(
+            MediaPlayer
+                .VIDEO_SCALING_MODE_SCALE_TO_FIT
+        )
         mediaPlayer?.prepareAsync()
+        seekTo(0)
     }
 
     private fun updateTextureViewSize() {

@@ -4,7 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.provider.MediaStore
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.buffer.android.thumby.ThumbyActivity
 import org.buffer.android.thumby.ThumbyActivity.Companion.EXTRA_THUMBNAIL_POSITION
@@ -20,10 +21,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val intent = Intent()
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
         intent.type = "video/*"
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(
             Intent.createChooser(
                 intent,
@@ -37,13 +36,18 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_CODE_PICK_MEDIA) {
                 data?.data?.let {
-                    startActivityForResult(ThumbyActivity.getStartIntent(this, it), REQUEST_CODE_PICK_THUMBNAIL)
+                    startActivityForResult(
+                        ThumbyActivity.getStartIntent(this, it),
+                        REQUEST_CODE_PICK_THUMBNAIL
+                    )
                 }
             } else if (requestCode == REQUEST_CODE_PICK_THUMBNAIL) {
                 val imageUri = data?.getParcelableExtra(EXTRA_URI) as Uri
                 val location = data.getLongExtra(EXTRA_THUMBNAIL_POSITION, 0)
-                val bitmap = ThumbyUtils.getBitmapAtFrame(this, imageUri, location,
-                    200, 200)
+                val bitmap = ThumbyUtils.getBitmapAtFrame(
+                    this, imageUri, location,
+                    1024, 1024
+                )
                 image.setImageBitmap(bitmap)
             }
         }
