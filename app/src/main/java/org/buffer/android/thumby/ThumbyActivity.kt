@@ -13,7 +13,8 @@ import org.buffer.android.thumby.listener.SeekListener
 class ThumbyActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_THUMBNAIL_POSITION = "org.buffer.android.thumby.EXTRA_THUMBNAIL_POSITION"
+        const val EXTRA_THUMBNAIL_POSITION =
+            "org.buffer.android.thumby.EXTRA_THUMBNAIL_POSITION"
         const val EXTRA_URI = "org.buffer.android.thumby.EXTRA_URI"
 
         fun getStartIntent(context: Context, uri: Uri, thumbnailPosition: Long = 0): Intent {
